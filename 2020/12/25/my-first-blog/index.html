@@ -31,7 +31,7 @@
 <meta property="og:description" content="算法设计与分析_第11次作业单源最短路$n(1\leq n \leq 3000)$个顶点$m(1\leq m \leq 7000)$条边的无向图，计算源点s到终点t的最短路。 输入输出格式及样例，参见CG对应题目。 算法实现_Dijkstra1234567891011121314151617181920212223242526272829303132333435363738394041424344">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-12-25T12:18:20.000Z">
-<meta property="article:modified_time" content="2020-12-25T12:38:00.485Z">
+<meta property="article:modified_time" content="2020-12-25T12:41:37.095Z">
 <meta property="article:author" content="青丝蛊">
 <meta name="twitter:card" content="summary">
 
@@ -147,7 +147,91 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90-%E7%AC%AC11%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.</span> <span class="nav-text">算法设计与分析_第11次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">单源最短路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-Dijkstra"><span class="nav-number">1.1.1.</span> <span class="nav-text">算法实现_Dijkstra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-Floyd"><span class="nav-number">1.1.2.</span> <span class="nav-text">算法实现_Floyd</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90-%E7%AC%AC11%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.</span> <span class="nav-text">算法设计与分析_第11次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">单源最短路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-Dijkstra"><span class="nav-number">1.1.1.</span> <span class="nav-text">算法实现_Dijkstra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-Floyd"><span class="nav-number">1.1.2.</span> <span class="nav-text">算法实现_Floyd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+#include &lt;bits&#x2F;stdc++.h&gt;
+using namespace std;
+typedef long long LL;
+const LL INF &#x3D; 1e10;
+int n, m, s, d;
+LL G[3010][3010];
+
+void Floyd()
+&amp;#123;
+    G[s][s] &#x3D; 0;
+    for (int r &#x3D; 1; r &lt;&#x3D; n; r++)
+    &amp;#123;
+        for (int i &#x3D; 1; i &lt;&#x3D; n; i++)
+        &amp;#123;
+            for (int j &#x3D; 1; j &lt;&#x3D; n; j++)
+            &amp;#123;
+                if (G[i][r] + G[r][j] &lt; G[i][j])
+                &amp;#123;
+                    G[i][j] &#x3D; G[i][r] + G[r][j];
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+&amp;#125;
+int main()
+&amp;#123;
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; d;
+    for (int i &#x3D; 1; i &lt;&#x3D; n; i++)
+        for (int j &#x3D; 1; j &lt;&#x3D; n; j++)
+            if (i !&#x3D; j)
+                G[i][j] &#x3D; INF;
+    while (m--)
+    &amp;#123;
+        LL a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        G[a][b] &#x3D; c;
+        G[b][a] &#x3D; c;
+    &amp;#125;
+    Floyd();
+    cout &lt;&lt; G[s][d];
+    return 0;
+&amp;#125;
+</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -225,7 +309,7 @@
       <span class="post-meta-item-text">نُشر في</span>
       
 
-      <time title="أُنشأ: 2020-12-25 20:18:20 / عُدل: 20:38:00" itemprop="dateCreated datePublished" datetime="2020-12-25T20:18:20+08:00">2020-12-25</time>
+      <time title="أُنشأ: 2020-12-25 20:18:20 / عُدل: 20:41:37" itemprop="dateCreated datePublished" datetime="2020-12-25T20:18:20+08:00">2020-12-25</time>
     </span>
 
   
@@ -241,9 +325,7 @@
         <h1 id="算法设计与分析-第11次作业"><a href="#算法设计与分析-第11次作业" class="headerlink" title="算法设计与分析_第11次作业"></a>算法设计与分析_第11次作业</h1><h2 id="单源最短路"><a href="#单源最短路" class="headerlink" title="单源最短路"></a>单源最短路</h2><p>$n(1\leq n \leq 3000)$个顶点$m(1\leq m \leq 7000)$条边的无向图，计算源点s到终点t的最短路。</p>
 <p>输入输出格式及样例，参见CG对应题目。</p>
 <h3 id="算法实现-Dijkstra"><a href="#算法实现-Dijkstra" class="headerlink" title="算法实现_Dijkstra"></a>算法实现_Dijkstra</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; P;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> LL INF = <span class="number">1e10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m, s, d;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    LL to, cost;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;node&gt;&gt; G;</span><br><span class="line"><span class="built_in">vector</span>&lt;LL&gt; dis;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dijkstra</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    dis[s] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">priority_queue</span>&lt;P, <span class="built_in">vector</span>&lt;P&gt;, greater&lt;P&gt;&gt; que;</span><br><span class="line">    que.push(&#123;<span class="number">0</span>, s&#125;); <span class="comment">//权值、顶点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!que.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        P t = que.top();</span><br><span class="line">        LL u = t.second, e = t.first;</span><br><span class="line">        que.pop();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (e &gt; dis[u])</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> c : G[u])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (dis[u] + c.cost &lt; dis[c.to])</span><br><span class="line">            &#123;</span><br><span class="line">                dis[c.to] = dis[u] + c.cost;</span><br><span class="line">                que.push(&#123;dis[c.to], c.to&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; d;</span><br><span class="line">    G.resize(n + <span class="number">1</span>);</span><br><span class="line">    dis.resize(n + <span class="number">1</span>, INF);</span><br><span class="line">    <span class="keyword">while</span> (m--)</span><br><span class="line">    &#123;</span><br><span class="line">        LL a, b, c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        G[a].push_back(&#123;b, c&#125;);</span><br><span class="line">        G[b].push_back(&#123;a, c&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    Dijkstra();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dis[d];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="算法实现-Floyd"><a href="#算法实现-Floyd" class="headerlink" title="算法实现_Floyd"></a>算法实现_Floyd</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> LL INF = <span class="number">1e10</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, s, d;</span><br><span class="line">LL G[<span class="number">3010</span>][<span class="number">3010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    G[s][s] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">1</span>; r &lt;= n; r++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (G[i][r] + G[r][j] &lt; G[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    G[i][j] = G[i][r] + G[r][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; d;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">            <span class="keyword">if</span> (i != j)</span><br><span class="line">                G[i][j] = INF;</span><br><span class="line">    <span class="keyword">while</span> (m--)</span><br><span class="line">    &#123;</span><br><span class="line">        LL a, b, c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        G[a][b] = c;</span><br><span class="line">        G[b][a] = c;</span><br><span class="line">    &#125;</span><br><span class="line">    Floyd();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; G[s][d];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-
+<h3 id="算法实现-Floyd"><a href="#算法实现-Floyd" class="headerlink" title="算法实现_Floyd"></a>算法实现_Floyd</h3><h2 id=""><a href="#" class="headerlink" title=""></a><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> LL INF = <span class="number">1e10</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, s, d;</span><br><span class="line">LL G[<span class="number">3010</span>][<span class="number">3010</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Floyd</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    G[s][s] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">1</span>; r &lt;= n; r++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (G[i][r] + G[r][j] &lt; G[i][j])</span><br><span class="line">                &#123;</span><br><span class="line">                    G[i][j] = G[i][r] + G[r][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; d;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">            <span class="keyword">if</span> (i != j)</span><br><span class="line">                G[i][j] = INF;</span><br><span class="line">    <span class="keyword">while</span> (m--)</span><br><span class="line">    &#123;</span><br><span class="line">        LL a, b, c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        G[a][b] = c;</span><br><span class="line">        G[b][a] = c;</span><br><span class="line">    &#125;</span><br><span class="line">    Floyd();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; G[s][d];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
     </div>
 
     
